@@ -1,0 +1,67 @@
+BACKLOG
+
+-------------------------------------------- fix or add ASAP (wait upstream)
+- .... still nothing
+
+-------------------------------------------- 0.1.0
+V - setup basic example with zig and raylib
+    V - setup vs code and ODIN wih extensions
+    V - hookup raylib
+    V - hookup mis memory detection
+    V - hookup logging odin with raylib
+    V - setup run script with test and build (release build always because issues should be detected and logged like production)
+    V - show some text drawing
+    V - when esc is pressed close
+    V - setup resolution and window
+    
+- move player around with keys and setup debug and camera
+    -setup camera with correct zoom
+    -setup texture atlas stuff
+    -setup basic scene management and game state storage
+    -lerp based movement
+    -enable / disable debug screen width f12
+    -show player info in debug
+    -show fps in debug
+    -setup readme file and mention the creator of the tilemap with some url
+
+-setup test level with collisions
+    -basic non generated tilemap
+    
+    -add collisions detection and handling with avian2d
+        -player cannot walk thru wall
+    -add 2 random enemy without AI
+
+-can discover the level
+    -minimap see all
+    -field of view player
+    -minimap show only discovered area's
+
+-can kill the enemy with weapon
+
+-player can be killed, game over
+
+-when all enemies are treasures are found go to next level
+
+-gain experience and "buy" upgrades
+
+-enemy AI
+
+-level generator
+    -every level more difficult
+
+-show minimap so the player knows what should be explored 
+
+- ....
+
+-------------------------------------------- 0.2.0
+- add sound when build-in sound is done
+
+FUTURE
+    -set windows icon
+    -set executable icon
+    -disable mouse when playing
+    -setup CI for windows
+    -setup CI for linus
+    -setup CI for mac
+
+NOT PLANNED
