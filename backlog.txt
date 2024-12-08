@@ -13,16 +13,21 @@ V - setup basic example with zig and raylib
     V - show some text drawing
     V - when esc is pressed close
     V - setup resolution and window
-    
+
+V - setup tooling and basic scene management
+    V - performance tooling 
+    V - renderdoc 
+    V - can debug the program (config stuff in vscode)
+    V add stuff to readme including picture
+    V setup basic scene management and game state storage
+
 - move player around with keys and setup debug and camera
     -setup camera with correct zoom
     -setup texture atlas stuff
-    -setup basic scene management and game state storage
     -lerp based movement
     -enable / disable debug screen width f12
     -show player info in debug
     -show fps in debug
-    -setup readme file and mention the creator of the tilemap with some url
 
 -setup test level with collisions
     -basic non generated tilemap

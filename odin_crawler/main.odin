@@ -4,14 +4,25 @@ import "base:runtime"
 
 import "core:c"
 import "core:log"
+import "core:mem"
 
 import rl "vendor:raylib"
 import stbsp "vendor:stb/sprintf"
 
 g_ctx: runtime.Context
 
-main :: proc() {
+SceneState :: enum {
+	menu,
+	playing,
+	game_over,
+}
 
+GameState :: struct {
+	current_scene_state: SceneState,
+}
+
+
+main :: proc() {
 	context.logger = log.create_console_logger(.Debug)
 	g_ctx = context
 
@@ -59,29 +70,29 @@ main :: proc() {
 		},
 	)
 
+	if ODIN_DEBUG {
+		log.debug("-- Memory detection is online! --")
 
-	when ODIN_DEBUG {
 		track: mem.Tracking_Allocator
 		mem.tracking_allocator_init(&track, context.allocator)
 		context.allocator = mem.tracking_allocator(&track)
 
 		defer {
 			if len(track.allocation_map) > 0 {
-				fmt.eprintf("=== %v allocations not freed: ===\n", len(track.allocation_map))
+				log.warnf("=== %v allocations not freed: ===\n", len(track.allocation_map))
 				for _, entry in track.allocation_map {
-					fmt.eprintf("- %v bytes @ %v\n", entry.size, entry.location)
+					log.warnf("- %v bytes @ %v\n", entry.size, entry.location)
 				}
 			}
 			if len(track.bad_free_array) > 0 {
-				fmt.eprintf("=== %v incorrect frees: ===\n", len(track.bad_free_array))
+				log.warnf("=== %v incorrect frees: ===\n", len(track.bad_free_array))
 				for entry in track.bad_free_array {
-					fmt.eprintf("- %p @ %v\n", entry.memory, entry.location)
+					log.warnf("- %p @ %v\n", entry.memory, entry.location)
 				}
 			}
 			mem.tracking_allocator_destroy(&track)
 		}
 	}
-
 
 	SCREEN_WIDTH :: i32(1920)
 	SCREEN_HEIGHT :: i32(1080)
@@ -91,13 +102,31 @@ main :: proc() {
 
 	rl.SetTargetFPS(60)
 
+	//setup initial game state 
+	game_state: GameState = {
+		current_scene_state = SceneState.menu,
+	}
+
+
+	delta_time: f32 = rl.GetFrameTime()
+
 	for !rl.WindowShouldClose() {
+
+		delta_time: f32 = rl.GetFrameTime()
 
 		rl.BeginDrawing()
 
-		rl.ClearBackground(rl.BLACK)
-
-		rl.DrawText("here comes the hud", 10, 10, 20, rl.GRAY)
+		switch game_state.current_scene_state {
+		case .menu:
+			menu_scene_update()
+			menu_scene_draw()
+		case .playing:
+			play_scene_update()
+			play_scene_draw()
+		case .game_over:
+			game_over_scene_update()
+			game_over_scene_draw()
+		}
 
 		rl.EndDrawing()
 
