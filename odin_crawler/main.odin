@@ -1,7 +1,6 @@
 package crawler
 
 import "base:runtime"
-
 import "core:c"
 import "core:log"
 import "core:mem"
@@ -11,16 +10,23 @@ import stbsp "vendor:stb/sprintf"
 
 g_ctx: runtime.Context
 
-SceneState :: enum {
-	menu,
-	playing,
-	game_over,
+Scene :: enum {
+	MENU,
+	PLAYING,
+	GAMEOVER,
 }
 
-GameState :: struct {
-	current_scene_state: SceneState,
+GeneralGameState :: struct {
+	assets_loaded:       bool,
+	current_scene_state: Scene,
+	texture_atlas:       rl.Texture2D,
 }
 
+SpriteType::enum{
+	PLAYER_IDLE_1,
+	PLAYER_IDLE_2,
+	PLAYER_IDLE_3,
+}
 
 main :: proc() {
 	context.logger = log.create_console_logger(.Debug)
@@ -103,10 +109,14 @@ main :: proc() {
 	rl.SetTargetFPS(60)
 
 	//setup initial game state 
-	game_state: GameState = {
-		current_scene_state = SceneState.menu,
+	general_game_state: GeneralGameState = {
+		assets_loaded       = false,
+		current_scene_state = Scene.MENU,
 	}
 
+	sprite_info := map[SpriteType]rl.Rectangle {
+		SpriteType.PLAYER_IDLE_1 = {1, 1, 30, 30},
+	}
 
 	delta_time: f32 = rl.GetFrameTime()
 
@@ -116,16 +126,16 @@ main :: proc() {
 
 		rl.BeginDrawing()
 
-		switch game_state.current_scene_state {
-		case .menu:
-			menu_scene_update()
-			menu_scene_draw()
-		case .playing:
-			play_scene_update()
-			play_scene_draw()
-		case .game_over:
-			game_over_scene_update()
-			game_over_scene_draw()
+		switch general_game_state.current_scene_state {
+		case .MENU:
+			menu_scene_update(&general_game_state, delta_time)
+			menu_scene_draw(&general_game_state)
+		case .PLAYING:
+			play_scene_update(&general_game_state, delta_time)
+			play_scene_draw(&general_game_state, sprite_info)
+		case .GAMEOVER:
+			game_over_scene_update(&general_game_state, delta_time)
+			game_over_scene_draw(&general_game_state)
 		}
 
 		rl.EndDrawing()

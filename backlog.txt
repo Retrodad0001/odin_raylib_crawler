@@ -21,13 +21,13 @@ V - setup tooling and basic scene management
     V add stuff to readme including picture
     V setup basic scene management and game state storage
 
-- move player around with keys and setup debug and camera
-    -setup camera with correct zoom
-    -setup texture atlas stuff
-    -lerp based movement
-    -enable / disable debug screen width f12
-    -show player info in debug
-    -show fps in debug
+//TODO move player around with keys and setup debug and camera
+    //TODO -setup camera with correct zoom
+    //TODO -setup texture atlas stuff
+    //TODO -lerp based movement
+    //TODO -enable / disable debug screen width f12
+    //TODO -show player info in debug
+    //TODO -show fps in debug
 
 -setup test level with collisions
     -basic non generated tilemap
@@ -59,7 +59,7 @@ V - setup tooling and basic scene management
 - ....
 
 -------------------------------------------- 0.2.0
-- add sound when build-in sound is done
+- add sound and music
 
 FUTURE
     -set windows icon

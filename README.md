@@ -12,10 +12,6 @@ Handy youtube tutorials for ODIN and Raylib:  https://www.youtube.com/@karl_zyli
 
 ODIN specific : 
 
-https://www.youtube.com/@mccGoNZooo 
+https://www.youtube.com/@mccGoNZooo Rickard Andersson (gonz)
 
-https://www.youtube.com/@GingerGames
-
-
-
-
+https://www.youtube.com/@GingerGames gingerBill
