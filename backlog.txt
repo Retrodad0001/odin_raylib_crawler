@@ -18,16 +18,21 @@ V - setup tooling and basic scene management
     V - performance tooling 
     V - renderdoc 
     V - can debug the program (config stuff in vscode)
-    V add stuff to readme including picture
-    V setup basic scene management and game state storage
+    V - add stuff to readme including picture
+    V - setup basic scene management and game state storage
 
-//TODO move player around with keys and setup debug and camera
+//TODO move player around in tilemap, basic setup debug, basic blending
+    //TODO -setup basic 2d blending with light 2d and shadows
+    //TODO -setup basic non generated tilemap for testing
+    //TODO -show idle animated player
+    //TODO -player can move (accelerated)
     //TODO -setup camera with correct zoom
     //TODO -setup texture atlas stuff
-    //TODO -lerp based movement
     //TODO -enable / disable debug screen width f12
     //TODO -show player info in debug
     //TODO -show fps in debug
+    //TODO -make screenshot with current state project
+    
 
 -setup test level with collisions
     -basic non generated tilemap
