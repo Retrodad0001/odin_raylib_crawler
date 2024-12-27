@@ -21,45 +21,55 @@ V - setup tooling and basic scene management
     V - add stuff to readme including picture
     V - setup basic scene management and game state storage
 
-//TODO move player around in tilemap, basic setup debug, basic blending
-    //TODO -setup basic 2d blending with light 2d and shadows
-    //TODO -setup basic non generated tilemap for testing
-    //TODO -show idle animated player
-    //TODO -player can move (accelerated)
-    //TODO -setup camera with correct zoom
-    //TODO -setup texture atlas stuff
-    //TODO -enable / disable debug screen width f12
-    //TODO -show player info in debug
-    //TODO -show fps in debug
-    //TODO -make screenshot with current state project
+V player can move around, camera setup and initial asset management
+    V player can move (non-accelerated)
+    V setup camera with correct zoom
+    V setup texture atlas stuff
+
+- add debug console basics
+    - enable / disable debug screen width f12
+    - show player info in debug
+    - show fps in debug
+
+- add accelerated movement
+
+- setup basic 2d blending with light 2d and shadows
+
+- add tilemap for basic testing
+
+- add animation
+
+- setup test level with collisions
+    - basic non generated tilemap
     
+- add collisions detection
+    - player cannot walk thru wall
+    - add 2 random enemy without AI
 
--setup test level with collisions
-    -basic non generated tilemap
-    
-    -add collisions detection and handling with avian2d
-        -player cannot walk thru wall
-    -add 2 random enemy without AI
+- can discover the level
+    - minimap see all
+    - field of view player
+    - minimap show only discovered area's
 
--can discover the level
-    -minimap see all
-    -field of view player
-    -minimap show only discovered area's
+- player can kill and monster can kill the player
+    -player can throw knife at monster
+    -player can kill monster
+    -monster can kill player by toughing
 
--can kill the enemy with weapon
+- when all enemies are treasures are found go to next level
 
--player can be killed, game over
+- gain experience and "buy" upgrades
 
--when all enemies are treasures are found go to next level
+- enemy AI
 
--gain experience and "buy" upgrades
-
--enemy AI
-
--level generator
+- level generator
     -every level more difficult
+    
+- show minimap so the player knows what should be explored 
 
--show minimap so the player knows what should be explored 
+- add more enemies
+
+- add boss enemies with multiple attack states
 
 - ....
 
@@ -67,11 +77,11 @@ V - setup tooling and basic scene management
 - add sound and music
 
 FUTURE
-    -set windows icon
-    -set executable icon
-    -disable mouse when playing
-    -setup CI for windows
-    -setup CI for linus
-    -setup CI for mac
+    - set windows icon
+    - set executable icon
+    - disable mouse when playing
+    - setup CI for windows
+    - setup CI for linus
+    - setup CI for mac
 
 NOT PLANNED
