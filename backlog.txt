@@ -26,10 +26,10 @@ V player can move around, camera setup and initial asset management
     V setup camera with correct zoom
     V setup texture atlas stuff
 
-- add debug console basics
-    - enable / disable debug screen width f12
-    - show player info in debug
-    - show fps in debug
+V add debug console basics
+    V enable / disable debug screen width f1
+    V show player info in debug
+    V show fps in debug
 
 - add accelerated movement
 

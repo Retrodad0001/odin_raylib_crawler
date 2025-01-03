@@ -1,7 +1,6 @@
 package crawler
 
 import "core:log"
-
 import rl "vendor:raylib"
 
 game_over_scene_update :: proc(game_state: ^GameState, delta_time: f32) {

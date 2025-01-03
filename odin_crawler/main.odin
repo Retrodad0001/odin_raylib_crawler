@@ -4,26 +4,9 @@ import "base:runtime"
 import "core:c"
 import "core:log"
 import "core:mem"
+
 import rl "vendor:raylib"
 import stbsp "vendor:stb/sprintf"
-
-Scene :: enum {
-	MENU,
-	PLAYING,
-	GAMEOVER,
-}
-
-GameState :: struct {
-	assets_loaded:       bool,
-	current_scene_state: Scene,
-	texture_atlas:       rl.Texture2D,
-	camera:              rl.Camera2D,
-	player:              Actor,
-}
-
-SpriteType :: enum {
-	PLAYER_IDLE_1,
-}
 
 ctx: runtime.Context
 
@@ -74,28 +57,26 @@ main :: proc() {
 		},
 	)
 
-	if ODIN_DEBUG {
-		log.debug("-- Memory detection is online! --")
+	log.debug("-- Memory detection is online! --")
 
-		track: mem.Tracking_Allocator
-		mem.tracking_allocator_init(&track, context.allocator)
-		context.allocator = mem.tracking_allocator(&track)
+	track: mem.Tracking_Allocator
+	mem.tracking_allocator_init(&track, context.allocator)
+	context.allocator = mem.tracking_allocator(&track)
 
-		defer {
-			if len(track.allocation_map) > 0 {
-				log.warnf("=== %v allocations not freed: ===\n", len(track.allocation_map))
-				for _, entry in track.allocation_map {
-					log.warnf("- %v bytes @ %v\n", entry.size, entry.location)
-				}
+	defer {
+		if len(track.allocation_map) > 0 {
+			log.warnf("=== %v allocations not freed: ===\n", len(track.allocation_map))
+			for _, entry in track.allocation_map {
+				log.warnf("- %v bytes @ %v\n", entry.size, entry.location)
 			}
-			if len(track.bad_free_array) > 0 {
-				log.warnf("=== %v incorrect frees: ===\n", len(track.bad_free_array))
-				for entry in track.bad_free_array {
-					log.warnf("- %p @ %v\n", entry.memory, entry.location)
-				}
-			}
-			mem.tracking_allocator_destroy(&track)
 		}
+		if len(track.bad_free_array) > 0 {
+			log.warnf("=== %v incorrect frees: ===\n", len(track.bad_free_array))
+			for entry in track.bad_free_array {
+				log.warnf("- %p @ %v\n", entry.memory, entry.location)
+			}
+		}
+		mem.tracking_allocator_destroy(&track)
 	}
 
 	SCREEN_WIDTH: i32 : 1920
@@ -114,16 +95,10 @@ main :: proc() {
 		position = {50, 50},
 	}
 
-	game_state: GameState = {
-		assets_loaded       = false,
-		current_scene_state = Scene.MENU,
-		camera              = camera,
-		player              = player,
-	}
+	game_state: GameState = game_state_create(&camera, player)
 
-	sprite_info := map[SpriteType]rl.Rectangle {
-		SpriteType.PLAYER_IDLE_1 = {128, 108, 16, 16},
-	}
+	sprite_info: map[SpriteType]rl.Rectangle = sprite_info_create()
+	defer delete(sprite_info)
 
 	delta_time: f32 = rl.GetFrameTime()
 
@@ -132,8 +107,10 @@ main :: proc() {
 		delta_time: f32 = rl.GetFrameTime()
 
 		rl.BeginDrawing()
-		rl.BeginMode2D(game_state.camera)
+		rl.ClearBackground(rl.BLACK)
 
+		//update and draw
+		rl.BeginMode2D(game_state.camera)
 		switch game_state.current_scene_state {
 		case .MENU:
 			menu_scene_update(&game_state, delta_time)
@@ -145,8 +122,17 @@ main :: proc() {
 			game_over_scene_update(&game_state, delta_time)
 			game_over_scene_draw(&game_state)
 		}
-
 		rl.EndMode2D()
+
+		//UI and debug
+		switch game_state.current_scene_state {
+		case .MENU:
+		case .PLAYING:
+			if game_state.show_debug {
+				play_scene_debug_draw(&game_state)
+			}
+		case .GAMEOVER:
+		}
 		rl.EndDrawing()
 
 		free_all(context.temp_allocator)
